@@ -19,10 +19,19 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 app.get('/getParticipants' , (req,res) =>
 {
-    student.find()
+    student.find({count: {$gt: 0 }})
 
     .exec()
     .then(user => res.status(200).json(user));
+});
+
+app.post('/reset' , (req,res) =>
+{
+    student.updateMany({}, {$set: {count: "0" }})
+    .then(user => res.status(200).json(user));
+    console.log("reset")
+
+ 
 });
 
 

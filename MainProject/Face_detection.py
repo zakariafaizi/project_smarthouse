@@ -1,7 +1,7 @@
 import face_recognition
 import os
 from time import sleep
-import mongo
+import ctypes
 import numpy as np
 from datetime import datetime
 # Pronounce
@@ -51,6 +51,9 @@ for img in myList:
     images.append(rgb)  # image matrix
     classNames.append(os.path.splitext(img)[0])  # name
 
+def showMessage(text,title):
+    return ctypes.windll.user32.MessageBoxW(0, text, title, 1)
+
 
 def findEncoding(imgs):
     encodeList = []
@@ -76,7 +79,7 @@ def colorDetect():
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         # cv2.drawContours(frame, contours, -1, (0, 255, 0), 2)
         # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        if colorIterator == 4:
+        if colorIterator == 5:
             colorIterator = 0
         else:
             colorIterator += 1
@@ -114,7 +117,6 @@ def markAttendance(name):
 
         text = "Welcome " + name
         translated = translator.translate(text, dest=output_lang)
-        print(translated.text)
         converted_audio = gtts.gTTS(translated.text, lang=output_lang)
 
         converted_audio.save(f'{name}.mp3')
@@ -124,17 +126,12 @@ def markAttendance(name):
         x = people.insert_one(mydict)
         #sleep(5)
     else:
-        print("Welcome again ", name)
+        print("Welcome ", name)
+        showMessage("Welcome "+name, "Message")
         RecognizedCounter = people.find({"name" : name})[0]
         RecognizedCounter = RecognizedCounter["count"]
-        people.update_one({"name" : name} , {"$set":{"count":RecognizedCounter+1}})
+        people.update_one({"name" : name} , {"$set":{"count":str(int(RecognizedCounter)+1)}})
         #sleep(5)
-
-
-
-
-
-
 
 
 
@@ -161,8 +158,6 @@ while cam.isOpened():
     contours, _ = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
 
-
-
     # Draw countours
     #cv2.drawContours(frame,contours,-1,(0,255,0),2)
     for c in contours:
@@ -185,7 +180,7 @@ while cam.isOpened():
                 cv2.polylines(imgRs,[pts],True,(255,0,255),5)
                 nomQRG = nomQR
 
-            if len(nomQRG) > 2:
+            if len(nomQRG) > 1:
                 sleep(3)
                 facesloc = face_recognition.face_locations(imgRs)  # faces
                 encodeFaces = face_recognition.face_encodings(imgRs, facesloc)
@@ -207,6 +202,7 @@ while cam.isOpened():
                             break
                         elif name != nomQRG:
                             print("SHOW YOUR COLOR CARD PLEASE !")
+                            showMessage("SHOW YOUR COLOR CARD PLEASE !", "Message")
                             sleep(6)
                             colorShown = colorDetect()
                             print("color shown",colorShown)
