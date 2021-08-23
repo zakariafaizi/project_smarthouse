@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+    
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xam_SmartHouse.Views.ItemsPage"
+             Title="Smart House"
+             xmlns:local="clr-namespace:Xam_SmartHouse.ViewModels"  
+             xmlns:model="clr-namespace:Xam_SmartHouse.Models"  
+             x:Name="BrowseItemsPage">
+
+    <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ItemsListView"
+                ItemsSource="{Binding Items}"
+                SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    
+                        <StackLayout Padding="10" x:DataType="model:People">
+                        <Grid ColumnSpacing="0" RowSpacing="-20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="70"/>
+                                <RowDefinition Height="70"/>
+                            </Grid.RowDefinitions>
+                            
+                            <StackLayout  Padding="0" Grid.Column="1" Grid.Row="0" >
+                                   <Label Text="{Binding name}"
+                            LineBreakMode="NoWrap" 
+                               HorizontalTextAlignment="End"
+                                   VerticalOptions="Start"
+                            Style="{DynamicResource ListItemTextStyle}" 
+                            FontSize="17" TextColor="Black" />
+                            </StackLayout>
+                         
+
+                            <Frame HorizontalOptions="Start" CornerRadius="100" 
+                               HeightRequest="70"
+                               WidthRequest="70"
+                               Padding="0"
+                               IsClippedToBounds="True">
+                                     <Image  Source="{Binding image,  StringFormat= '\{0\}.jpg'}"  />
+                            </Frame>
+
+                            <StackLayout   Grid.Column="1" Grid.Row="1" >
+                                  <Label Text="{Binding time}" 
+                                    LineBreakMode="NoWrap"
+                                    Style="{DynamicResource ListItemDetailTextStyle}"
+                                    FontSize="13" HorizontalOptions="EndAndExpand"  />
+
+                            </StackLayout>
+
+
+                            <StackLayout Grid.Column="1" Grid.Row="2" >
+                                <Label Text="{Binding count, StringFormat= 'Counter : \{0\}'}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="13"  HorizontalOptions="End" VerticalOptions="End" />
+
+
+                            </StackLayout>
+
+
+                            <StackLayout Grid.Column="1" Grid.Row="3" >
+                                <Label Text="__________________________________" 
+                                LineBreakMode="NoWrap"
+                                 HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="Start"
+                                TextColor="{Binding color}"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="20" />
+                         
+                            
+                            </StackLayout>
+                           
+
+
+
+                            
+                        </Grid>
+                        
+                    </StackLayout>
+                    
+                   
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

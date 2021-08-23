@@ -65,7 +65,7 @@ def findEncoding(imgs):
 
 encodeListFinal = findEncoding(images)
 
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture(2)
 
 
 colorIterator = 0
@@ -115,19 +115,19 @@ def markAttendance(name):
         now = datetime.now()
         dtString = now.strftime('%A %d %B at %H:%M')
 
-        text = "Welcome " + name
-        translated = translator.translate(text, dest=output_lang)
-        converted_audio = gtts.gTTS(translated.text, lang=output_lang)
-
-        converted_audio.save(f'{name}.mp3')
-        playsound.playsound(f'{name}.mp3')
+        # text = "Welcome " + name
+        # translated = translator.translate(text, dest=output_lang)
+        # converted_audio = gtts.gTTS(translated.text, lang=output_lang)
+        #
+        # converted_audio.save(f'{name}.mp3')
+        # playsound.playsound(f'{name}.mp3')
 
         mydict = {"name": name, "time": dtString, "count" : 1}
         x = people.insert_one(mydict)
         #sleep(5)
     else:
         print("Welcome ", name)
-        showMessage("Welcome "+name, "Message")
+        #showMessage("Welcome "+name, "Message")
         RecognizedCounter = people.find({"name" : name})[0]
         RecognizedCounter = RecognizedCounter["count"]
         people.update_one({"name" : name} , {"$set":{"count":str(int(RecognizedCounter)+1)}})

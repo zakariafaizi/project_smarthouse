@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xam_SmartHouse.Views.AboutPage"
+             xmlns:vm="clr-namespace:Xam_SmartHouse.ViewModels"
+             Title="Smart House">
+    
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout BackgroundColor="Transparent" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+       
+                <ContentView Padding="0,10,0,0" VerticalOptions="FillAndExpand">
+                    <Image Source="teccart_logo.jpg" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+                </ContentView>
+       
+        </StackLayout>
+        <ScrollView Grid.Row="1">
+            <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
+                <Label Text="Teccart 2021" FontSize="Title"/>
+                <Label Text="The Smart House Raspberry Pi project" FontSize="16" Padding="0,0,0,0"/>
+           
+              
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>
