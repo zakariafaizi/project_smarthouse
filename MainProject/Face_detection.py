@@ -10,6 +10,7 @@ import speech_recognition as sr
 import gtts
 import playsound
 from pyzbar.pyzbar import decode
+from prettytable import PrettyTable
 
 recognizer = sr.Recognizer()
 translator = googletrans.Translator()
@@ -18,9 +19,6 @@ output_lang = 'en'
 import pymongo as mongo
 import winsound
 import cv2
-#import pywhatkit as whatsapp
-
-
 
 
 
@@ -54,6 +52,19 @@ for img in myList:
 def showMessage(text,title):
     return ctypes.windll.user32.MessageBoxW(0, text, title, 1)
 
+def updateCSV():
+    myDataList = list()
+    for x in people.find():
+        myDataList.append(x)
+
+    t = PrettyTable(['Name', 'Counter', 'Color', 'Arrival', 'Departure'])
+    t.align = 'l'
+    t.border = False
+
+    with open('Attendance.csv', 'r+') as f:
+        for j in range(len(myDataList)):
+            t.add_row([myDataList[j]["name"], myDataList[j]["count"],myDataList[j]["color"] ,myDataList[j]["timein"], myDataList[j]["timeout"]])
+        f.write(t.get_string(border=True))
 
 def findEncoding(imgs):
     encodeList = []
@@ -73,33 +84,19 @@ def colorDetect():
     while True:
         global colorIterator
         _, frame = cam.read()
-        # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsv, np.array(colors_lower[colorIterator]), np.array(colors_upper[colorIterator]))
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        # cv2.drawContours(frame, contours, -1, (0, 255, 0), 2)
-        # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         if colorIterator == 5:
             colorIterator = 0
         else:
             colorIterator += 1
         for c in contours:
             area = cv2.contourArea(c)
-            if area > 30000:           #TO DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-                # cv2.drawContours(frame, contours, -1, (0, 255, 0), 2)
-                x, y, w, h = cv2.boundingRect(c)
-                # card = frame[x:x+w,y:y+h]
-                # meancolor = card.mean(2)
-                # print(x, y, w, h)
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            if area > 30000:
                 color = colors_lower.index(colors_lower[colorIterator - 1])
                 color = colors_names[color]
-                print(color)
                 return color
-
-
-
-
 
 
 def markAttendance(name):
@@ -112,7 +109,6 @@ def markAttendance(name):
     peoplenames = list()
     for j in range(len(myDataList)):
         peoplenames.append(myDataList[j]['name'])
-
 
     cnt = actual['count']
 
@@ -128,26 +124,25 @@ def markAttendance(name):
         playsound.playsound(f'{name}.mp3')
 
         people.update_one({"name": name}, {"$set": {"count": 1, "timein": dtString}})
-        #sleep(5)
+
     else:
         if int(cnt) % 2:
-            print("Welcome ", name)
+            print("Bye ", name)
             now = datetime.now()
             dtString = now.strftime('%A %d %B at %H:%M')
-            #showMessage("Welcome "+name, "Message")
             RecognizedCounter = people.find({"name" : name})[0]
             RecognizedCounter = RecognizedCounter["count"]
             people.update_one({"name" : name} , {"$set":{"count":str(int(RecognizedCounter)+1),"timeout":dtString}})
-            #sleep(5)
+            updateCSV()
+
         else:
             print("Welcome ", name)
             now = datetime.now()
             dtString = now.strftime('%A %d %B at %H:%M')
-            # showMessage("Welcome "+name, "Message")
             RecognizedCounter = people.find({"name": name})[0]
             RecognizedCounter = RecognizedCounter["count"]
             people.update_one({"name": name}, {"$set": {"count": str(int(RecognizedCounter) + 1), "timein": dtString , "timeout":"---"}})
-            # sleep(5)
+            updateCSV()
 
 
 
@@ -167,37 +162,24 @@ while cam.isOpened():
     blur = cv2.GaussianBlur(gray, (5, 5), 0)
     # threshold to get rid of unwanted objects
     _, thresh = cv2.threshold(blur, 20, 255, cv2.THRESH_BINARY)
-
     dilated = cv2.dilate(thresh, None, iterations=3)
-
     # contours of ROI's       # ROI = REGION OF INTEREST
     contours, _ = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-
-    # Draw countours
-    #cv2.drawContours(frame,contours,-1,(0,255,0),2)
     for c in contours:
         if cv2.contourArea(c) > 5000:
-            x, y, w, h = cv2.boundingRect(c)
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
             imgRs = cv2.resize(frame, (0, 0), None, 0.25, 0.25)
-            # (0,0) original img
-            # None : define any pixel size
             imgRs = cv2.cvtColor(imgRs, cv2.COLOR_BGR2RGB)
 
+            if len(nomQRG) < 1:
+                # detect QR code
+                for QR in decode(imgRs):
+                    nomQR = QR.data.decode()
+                    print("nomQR : ", nomQR)
+                    nomQRG = nomQR
+                    break;
 
-            # detect QR code
-
-            for QR in decode(imgRs):
-                nomQR = QR.data.decode()
-                print("nomQR" , nomQR)
-                pts = np.array([QR.polygon],np.int32)
-                pts = pts.reshape((-1,1,2))
-                cv2.polylines(imgRs,[pts],True,(255,0,255),5)
-                nomQRG = nomQR
-
-            if len(nomQRG) > 1:
-                sleep(3)
+            elif len(nomQRG) > 1:
                 facesloc = face_recognition.face_locations(imgRs)  # faces
                 encodeFaces = face_recognition.face_encodings(imgRs, facesloc)
                 for encodeFace, faceloc in zip(encodeFaces, facesloc):
@@ -206,18 +188,17 @@ while cam.isOpened():
                     facedistIndex = np.argmin(faceDist)  # returns lower distance index
                     if results[facedistIndex]:  # if results[index] == True
                         name = classNames[facedistIndex]
-                        y1, x2, y2, x1 = faceloc
-                        y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
-                        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                        cv2.rectangle(frame, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
-                        cv2.putText(frame, name, (x1 + 10, y2 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                        # y1, x2, y2, x1 = faceloc
+                        # y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
+                        # cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                        # cv2.rectangle(frame, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
+                        # cv2.putText(frame, name, (x1 + 10, y2 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
 
                         if name == nomQRG:
                             markAttendance(name)
                             nomQRG = ""
                             break
                         elif name != nomQRG:
-                            print("SHOW YOUR COLOR CARD PLEASE !")
                             showMessage("SHOW YOUR COLOR CARD PLEASE !", "Message")
                             sleep(6)
                             colorShown = colorDetect()
