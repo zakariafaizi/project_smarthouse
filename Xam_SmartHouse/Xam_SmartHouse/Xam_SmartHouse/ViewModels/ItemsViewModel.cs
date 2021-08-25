@@ -30,8 +30,8 @@ namespace Xam_SmartHouse.ViewModels
 
         public ItemsViewModel()
         {
-            
 
+            random = new Random();
             status = false;
             Title = "Browse";
             Items = new ObservableCollection<People>();
@@ -88,7 +88,7 @@ namespace Xam_SmartHouse.ViewModels
                                     string[] imgs = document.GetElement("name").Value.ToString().Split(' ');
                                     string img = imgs[0];
 
-                                    ItemsCheck.Add(new People() { name = document.GetElement("name").Value.ToString(), time = document.GetElement("time").Value.ToString(), count = document.GetElement("count").Value.ToString(), color = document.GetElement("color").Value.ToString(), image = img });
+                                    ItemsCheck.Add(new People() { name = document.GetElement("name").Value.ToString(), timein = document.GetElement("timein").Value.ToString(), timeout = document.GetElement("timeout").Value.ToString(), count = document.GetElement("count").Value.ToString(), color = document.GetElement("color").Value.ToString(), image = img });
 
                                 }
 
@@ -99,8 +99,9 @@ namespace Xam_SmartHouse.ViewModels
 
                         foreach(People p in ItemsCheck)
                         {
-                            People p2 = ItemsReference[ItemsCheck.IndexOf(p)];
-                            if(p.count != p2.count || p.time != p2.time)
+                            int index = ItemsCheck.IndexOf(p);
+                            People p2 = ItemsReference[index];
+                            if(p.count != p2.count || p.timein != p2.timein || p.timeout != p2.timeout)
                             {
 
 
@@ -155,8 +156,8 @@ namespace Xam_SmartHouse.ViewModels
                                     string[] imgs = document.GetElement("name").Value.ToString().Split(' ');
                                     string img = imgs[0];
 
-                                    Items.Add(new People() { name = document.GetElement("name").Value.ToString(), time = document.GetElement("time").Value.ToString(), count = document.GetElement("count").Value.ToString(), color = document.GetElement("color").Value.ToString(), image = img });
-                                    ItemsReference.Add(new People() { name = document.GetElement("name").Value.ToString(), time = document.GetElement("time").Value.ToString(), count = document.GetElement("count").Value.ToString(), color = document.GetElement("color").Value.ToString(), image = img });
+                                    Items.Add(new People() { name = document.GetElement("name").Value.ToString(), timein = document.GetElement("timein").Value.ToString(), timeout = document.GetElement("timeout").Value.ToString(), count = document.GetElement("count").Value.ToString(), color = document.GetElement("color").Value.ToString(), image = img });
+                                    ItemsReference.Add(new People() { name = document.GetElement("name").Value.ToString(), timein = document.GetElement("timein").Value.ToString(), timeout = document.GetElement("timeout").Value.ToString(), count = document.GetElement("count").Value.ToString(), color = document.GetElement("color").Value.ToString(), image = img });
                                 }
 
 
@@ -180,7 +181,7 @@ namespace Xam_SmartHouse.ViewModels
                 }
 
 
-                await Task.Delay(100);
+                await Task.Delay(1000);
 
             }
 

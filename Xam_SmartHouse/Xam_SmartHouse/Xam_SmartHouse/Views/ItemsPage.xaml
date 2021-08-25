@@ -16,23 +16,23 @@
                 <DataTemplate>
                     
                         <StackLayout Padding="10" x:DataType="model:People">
-                        <Grid ColumnSpacing="0" RowSpacing="-20">
+                        <Grid ColumnSpacing="0" RowSpacing="-30">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="70"/>
                                 <RowDefinition Height="70"/>
                             </Grid.RowDefinitions>
                             
-                            <StackLayout  Padding="0" Grid.Column="1" Grid.Row="0" >
+                            <StackLayout  Padding="0" Grid.Column="0" Grid.Row="0" >
                                    <Label Text="{Binding name}"
                             LineBreakMode="NoWrap" 
-                               HorizontalTextAlignment="End"
+                               HorizontalTextAlignment="Start"
                                    VerticalOptions="Start"
                             Style="{DynamicResource ListItemTextStyle}" 
                             FontSize="17" TextColor="Black" />
                             </StackLayout>
                          
 
-                            <Frame HorizontalOptions="Start" CornerRadius="100" 
+                            <Frame HorizontalOptions="End" VerticalOptions="CenterAndExpand" CornerRadius="100" 
                                HeightRequest="70"
                                WidthRequest="70"
                                Padding="0"
@@ -40,29 +40,40 @@
                                      <Image  Source="{Binding image,  StringFormat= '\{0\}.jpg'}"  />
                             </Frame>
 
-                            <StackLayout   Grid.Column="1" Grid.Row="1" >
-                                  <Label Text="{Binding time}" 
-                                    LineBreakMode="NoWrap"
-                                    Style="{DynamicResource ListItemDetailTextStyle}"
-                                    FontSize="13" HorizontalOptions="EndAndExpand"  />
 
-                            </StackLayout>
-
-
-                            <StackLayout Grid.Column="1" Grid.Row="2" >
-                                <Label Text="{Binding count, StringFormat= 'Counter : \{0\}'}" 
+                            <StackLayout Padding="-10,0,0,0" Grid.Column="0" Grid.Row="1" >
+                                <Label Text="{Binding count, StringFormat= 'Count : \{0\} '}" 
                                 LineBreakMode="NoWrap"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
-                                FontSize="13"  HorizontalOptions="End" VerticalOptions="End" />
+                                FontSize="13"  HorizontalOptions="Start" VerticalOptions="End" />
 
 
                             </StackLayout>
 
+                            <StackLayout  Padding="-20,0,0,0"  Grid.Column="0" Grid.Row="2" >
+                                <Label Text="{Binding timein, StringFormat= 'In        : \{0\}'}" 
+                                    LineBreakMode="NoWrap"
+                                
+                                    Style="{DynamicResource ListItemDetailTextStyle}"
+                                    FontSize="13" HorizontalOptions="Start" VerticalOptions="Start" />
 
-                            <StackLayout Grid.Column="1" Grid.Row="3" >
-                                <Label Text="__________________________________" 
+                            </StackLayout>
+
+                            <StackLayout Padding="5,0,0,0" Grid.Column="0" Grid.Row="3" >
+                                <Label Text="{Binding timeout, StringFormat= 'Out     : \{0\}'}" 
+                                    LineBreakMode="NoWrap"
+                                 
+                                    Style="{DynamicResource ListItemDetailTextStyle}"
+                                    FontSize="13" HorizontalOptions="Start" VerticalOptions="End" />
+
+                            </StackLayout>
+
+
+
+                            <StackLayout Padding="5,0,0,0"  Grid.Column="0" Grid.Row="4" >
+                                <Label Text="_______________________" 
                                 LineBreakMode="NoWrap"
-                                 HorizontalOptions="CenterAndExpand"
+                                 HorizontalOptions="StartAndExpand"
                                    VerticalOptions="Start"
                                 TextColor="{Binding color}"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
