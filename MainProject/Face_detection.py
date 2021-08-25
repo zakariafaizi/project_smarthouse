@@ -62,6 +62,7 @@ def updateCSV():
     t.border = False
 
     with open('Attendance.csv', 'r+') as f:
+        f.truncate(0)
         for j in range(len(myDataList)):
             t.add_row([myDataList[j]["name"], myDataList[j]["count"],myDataList[j]["color"] ,myDataList[j]["timein"], myDataList[j]["timeout"]])
         f.write(t.get_string(border=True))
@@ -124,6 +125,7 @@ def markAttendance(name):
         playsound.playsound(f'{name}.mp3')
 
         people.update_one({"name": name}, {"$set": {"count": 1, "timein": dtString}})
+        updateCSV()
 
     else:
         if int(cnt) % 2:
@@ -180,6 +182,7 @@ while cam.isOpened():
                     break;
 
             elif len(nomQRG) > 1:
+                sleep(1)
                 facesloc = face_recognition.face_locations(imgRs)  # faces
                 encodeFaces = face_recognition.face_encodings(imgRs, facesloc)
                 for encodeFace, faceloc in zip(encodeFaces, facesloc):
@@ -188,11 +191,6 @@ while cam.isOpened():
                     facedistIndex = np.argmin(faceDist)  # returns lower distance index
                     if results[facedistIndex]:  # if results[index] == True
                         name = classNames[facedistIndex]
-                        # y1, x2, y2, x1 = faceloc
-                        # y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
-                        # cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                        # cv2.rectangle(frame, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
-                        # cv2.putText(frame, name, (x1 + 10, y2 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
 
                         if name == nomQRG:
                             markAttendance(name)
@@ -200,7 +198,7 @@ while cam.isOpened():
                             break
                         elif name != nomQRG:
                             showMessage("SHOW YOUR COLOR CARD PLEASE !", "Message")
-                            sleep(6)
+                            sleep(2)
                             colorShown = colorDetect()
                             print("color shown",colorShown)
                             x = people.find({"name": nomQRG})[0]
