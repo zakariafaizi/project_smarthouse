@@ -1,7 +1,7 @@
-
 import "bootstrap/dist/css/bootstrap.min.css"
 import axios from 'axios'
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import './main.css';
 
 
 
@@ -14,11 +14,14 @@ class main extends React.Component {
 
         this.verifyData = this.verifyData.bind(this)
         this.resetData = this.resetData.bind(this)
+        this.seeAll = this.seeAll.bind(this)
+        this.Active = this.Active.bind(this)
 
         this.state = {
-
+            all:[],
             participants:[],
-            leng:''
+            leng:'',
+            clicked:''
         }
 
         
@@ -97,8 +100,8 @@ class main extends React.Component {
 
         axios.post('http://localhost:3039/reset')
         .then((response) => {
-        
-            this.setState({participants : [] , leng:''})
+       
+            this.setState({participants : [], leng:'',clicked:0})
 
         
         })
@@ -111,7 +114,28 @@ class main extends React.Component {
       
     }
 
-  
+    seeAll(){
+
+        axios.post('http://localhost:3039/all')
+        .then((response) => {
+            const data = response.data;
+            this.setState({all : data , leng:data.length,clicked:1})
+
+        
+        })
+        .catch((error) =>
+        {
+            console.log(error)
+        });
+    }
+    Active()
+    {
+        this.setState({clicked:0});
+
+    }
+
+
+
     componentWillUnmount() {
         clearInterval(this.timerID);
       }
@@ -119,25 +143,46 @@ class main extends React.Component {
      peopleList()
     {
      
-        if(this.state.leng > 0)
+        if(this.state.leng > 0 && this.state.clicked <1)
         {
 
             return this.state.participants.map(currentt => {
     
                 return(
                     
+                    <tr className="row">
+                    <td  className="col-lg-3 col-sm-3 col-xs-3 col-3">{currentt.name}</td>
+                    <td className="col-lg-2 col-sm-2 col-xs-2 col-2">{currentt.timein}</td>
+                    <td className="col-lg-2 col-sm-2 col-xs-2 col-2">{currentt.timeout}</td>
+                    <td className="col-lg-2 col-sm-2 col-xs-2 col-2">{currentt.count}</td>
+                    <td className="col-lg-3 col-xs-3 col-3" ><img style={{borderRadius:50+'px' , borderWidth : 7,borderStyle: 'solid',borderColor:currentt.color}}  width="100px" height="100px" src={process.env.PUBLIC_URL + '/Images/'+currentt.name+'.jpg'} /></td> 
+
+                    </tr>
+               
+                   
+                    )
+                   
+                })
+
+        }
+        else if(this.state.clicked === 1)
+        {
+            return this.state.all.map(currentt => {
+    
+                return(
+                    
                         <tr className="row">
-                        <td  className="col-lg-3 col-xs-3 col-3">{currentt.name}</td>
-                        <td className="col-lg-3 col-sm-3 col-xs-3 col-3">{currentt.time}</td>
+                        <td  className="col-lg-3 col-sm-3 col-xs-3 col-3">{currentt.name}</td>
+                        <td className="col-lg-2 col-sm-2 col-xs-2 col-2">{currentt.timein}</td>
+                        <td className="col-lg-2 col-sm-2 col-xs-2 col-2">{currentt.timeout}</td>
                         <td className="col-lg-2 col-sm-2 col-xs-2 col-2">{currentt.count}</td>
-                        <td className="col-lg-4 col-xs-4 col-4" ><img style={{borderRadius:50+'px' , borderWidth : 7,borderStyle: 'solid',borderColor:currentt.color}}  width="100px" height="100px" src={process.env.PUBLIC_URL + '/Images/'+currentt.name+'.jpg'} /></td> 
+                        <td className="col-lg-3 col-xs-3 col-3" ><img style={{borderRadius:50+'px' , borderWidth : 7,borderStyle: 'solid',borderColor:currentt.color}}  width="100px" height="100px" src={process.env.PUBLIC_URL + '/Images/'+currentt.name+'.jpg'} /></td> 
     
                         </tr>
                    
                     )
                    
                 })
-
         }
         else
         {
@@ -145,10 +190,11 @@ class main extends React.Component {
             return(
                 
                     <tr className="row">
-                    <td  className="col-lg-3 col-xs-3 col-3">-</td>
                     <td className="col-lg-3 col-sm-3 col-xs-3 col-3">-</td>
                     <td className="col-lg-2 col-sm-2 col-xs-2 col-2">-</td>
-                    <td className="col-lg-4 col-xs-4 col-4" >-</td> 
+                    <td className="col-lg-2 col-sm-2 col-xs-2 col-2">-</td>
+                    <td className="col-lg-2 col-sm-2 col-xs-2 col-2">-</td>
+                    <td className="col-lg-3 col-sm-3 col-xs-3 col-3">-</td> 
 
                     </tr>
             
@@ -174,9 +220,8 @@ class main extends React.Component {
   return (
     <div className="container">
     
-    <center><h3> Smart House</h3> </center>
-
-     
+    <center><br></br><h3>  S M A R T  H O U S E </h3><br></br></center>
+        
 
       <table className="table">
 
@@ -184,10 +229,11 @@ class main extends React.Component {
 
          
               <tr className="row">
-                  <th className="col-xs-3 col-lg-3 col-3">Name</th>
-                  <th className="col-xs-3 col-lg-3 col-sm-3 col-xs-3 col-3">First Arrival</th>
-                  <th className="col-xs-2 col-lg-2 col-sm-2 col-xs-2 col-2">Counter</th>
-                  <th className="col-xs-4 col-lg-4 col-4">Image</th> 
+                  <th className="col-lg-3 col-sm-3 col-xs-3 col-3">Name</th>
+                  <th className="col-lg-2 col-sm-2 col-xs-2 col-2">Arrival</th>
+                  <th className="col-lg-2 col-sm-2 col-xs-2 col-2">Departure</th>
+                  <th className="col-lg-2 col-sm-2 col-xs-2 col-2">Counter</th>
+                  <th className="col-lg-3 col-sm-3 col-xs-3 col-3">Image</th> 
         
               </tr>
           
@@ -206,7 +252,15 @@ class main extends React.Component {
       </table>
 
 
-   <center> <button type="button" onClick={this.resetData} class="btn btn-info">Reset</button></center>
+    <center class="row">
+        <button type="button" onClick={this.Active} class="btn btn-info col-xs-12 col-sm-12 col-md-4 col-12 col-xl-4" >Inside</button>
+        <button type="button" onClick={this.resetData} class="btn btn-warning col-xs-12 col-sm-12 col-md-4 col-12 col-xl-4">Reset</button>
+        <button type="button" onClick={this.seeAll} class="btn btn-info col-xs-12 col-sm-12 col-md-4 col-12 col-xl-4">See All</button>
+    </center>
+
+    <br></br>
+    <br></br>
+ 
     </div>
     )
   }

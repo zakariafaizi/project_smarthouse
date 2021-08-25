@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 
 const modelS = new mongoose.Schema({
     name: String,
-    time: String,
     count: String,
-    color: String
+    color: String,
+    timein:String,
+    timeout:String
 
 },{collection:'project'});
 

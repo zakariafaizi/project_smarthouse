@@ -85,7 +85,7 @@ def colorDetect():
             colorIterator += 1
         for c in contours:
             area = cv2.contourArea(c)
-            if area > 20000:
+            if area > 100000:           #TO DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
                 # cv2.drawContours(frame, contours, -1, (0, 255, 0), 2)
                 x, y, w, h = cv2.boundingRect(c)
                 # card = frame[x:x+w,y:y+h]
@@ -103,6 +103,7 @@ def colorDetect():
 
 
 def markAttendance(name):
+    actual = people.find({"name": name})[0]
     # retrieve existing name
     myDataList = list()
     for x in people.find():
@@ -111,7 +112,11 @@ def markAttendance(name):
     peoplenames = list()
     for j in range(len(myDataList)):
         peoplenames.append(myDataList[j]['name'])
-    if name not in peoplenames:
+
+
+    cnt = actual['count']
+
+    if int(cnt) < 1:
         now = datetime.now()
         dtString = now.strftime('%A %d %B at %H:%M')
 
@@ -122,15 +127,16 @@ def markAttendance(name):
         # converted_audio.save(f'{name}.mp3')
         # playsound.playsound(f'{name}.mp3')
 
-        mydict = {"name": name, "time": dtString, "count" : 1}
-        x = people.insert_one(mydict)
+        people.update_one({"name": name}, {"$set": {"count": 1, "time": dtString}})
         #sleep(5)
     else:
         print("Welcome ", name)
+        now = datetime.now()
+        dtString = now.strftime('%A %d %B at %H:%M')
         #showMessage("Welcome "+name, "Message")
         RecognizedCounter = people.find({"name" : name})[0]
         RecognizedCounter = RecognizedCounter["count"]
-        people.update_one({"name" : name} , {"$set":{"count":str(int(RecognizedCounter)+1)}})
+        people.update_one({"name" : name} , {"$set":{"count":str(int(RecognizedCounter)+1),"time":dtString}})
         #sleep(5)
 
 

@@ -19,15 +19,26 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 app.get('/getParticipants' , (req,res) =>
 {
-    student.find({count: {$gt: 0 }})
+    student.find({timein: {$ne: "---" } , timeout: "---"})
 
     .exec()
     .then(user => res.status(200).json(user));
 });
 
+
+app.post('/all' , (req,res) =>
+{
+    student.find()
+
+    .exec()
+    .then(user => res.status(200).json(user));
+});
+
+
+
 app.post('/reset' , (req,res) =>
 {
-    student.updateMany({}, {$set: {count: "0" }})
+    student.updateMany({}, {$set: {count: "0" ,timein:"---" ,timeout:"---"}})
     .then(user => res.status(200).json(user));
     console.log("reset")
 
