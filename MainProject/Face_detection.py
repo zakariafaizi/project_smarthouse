@@ -65,7 +65,7 @@ def findEncoding(imgs):
 
 encodeListFinal = findEncoding(images)
 
-cam = cv2.VideoCapture(2)
+cam = cv2.VideoCapture(0)
 
 
 colorIterator = 0
@@ -85,7 +85,7 @@ def colorDetect():
             colorIterator += 1
         for c in contours:
             area = cv2.contourArea(c)
-            if area > 100000:           #TO DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+            if area > 30000:           #TO DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
                 # cv2.drawContours(frame, contours, -1, (0, 255, 0), 2)
                 x, y, w, h = cv2.boundingRect(c)
                 # card = frame[x:x+w,y:y+h]
@@ -120,24 +120,34 @@ def markAttendance(name):
         now = datetime.now()
         dtString = now.strftime('%A %d %B at %H:%M')
 
-        # text = "Welcome " + name
-        # translated = translator.translate(text, dest=output_lang)
-        # converted_audio = gtts.gTTS(translated.text, lang=output_lang)
-        #
-        # converted_audio.save(f'{name}.mp3')
-        # playsound.playsound(f'{name}.mp3')
+        text = "Welcome " + name
+        translated = translator.translate(text, dest=output_lang)
+        converted_audio = gtts.gTTS(translated.text, lang=output_lang)
 
-        people.update_one({"name": name}, {"$set": {"count": 1, "time": dtString}})
+        converted_audio.save(f'{name}.mp3')
+        playsound.playsound(f'{name}.mp3')
+
+        people.update_one({"name": name}, {"$set": {"count": 1, "timein": dtString}})
         #sleep(5)
     else:
-        print("Welcome ", name)
-        now = datetime.now()
-        dtString = now.strftime('%A %d %B at %H:%M')
-        #showMessage("Welcome "+name, "Message")
-        RecognizedCounter = people.find({"name" : name})[0]
-        RecognizedCounter = RecognizedCounter["count"]
-        people.update_one({"name" : name} , {"$set":{"count":str(int(RecognizedCounter)+1),"time":dtString}})
-        #sleep(5)
+        if int(cnt) % 2:
+            print("Welcome ", name)
+            now = datetime.now()
+            dtString = now.strftime('%A %d %B at %H:%M')
+            #showMessage("Welcome "+name, "Message")
+            RecognizedCounter = people.find({"name" : name})[0]
+            RecognizedCounter = RecognizedCounter["count"]
+            people.update_one({"name" : name} , {"$set":{"count":str(int(RecognizedCounter)+1),"timeout":dtString}})
+            #sleep(5)
+        else:
+            print("Welcome ", name)
+            now = datetime.now()
+            dtString = now.strftime('%A %d %B at %H:%M')
+            # showMessage("Welcome "+name, "Message")
+            RecognizedCounter = people.find({"name": name})[0]
+            RecognizedCounter = RecognizedCounter["count"]
+            people.update_one({"name": name}, {"$set": {"count": str(int(RecognizedCounter) + 1), "timein": dtString , "timeout":"---"}})
+            # sleep(5)
 
 
 
