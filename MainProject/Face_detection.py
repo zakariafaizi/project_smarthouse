@@ -116,14 +116,7 @@ def markAttendance(name):
     if int(cnt) < 1:
         now = datetime.now()
         dtString = now.strftime('%A %d %B at %H:%M')
-
-        text = "Welcome " + name
-        translated = translator.translate(text, dest=output_lang)
-        converted_audio = gtts.gTTS(translated.text, lang=output_lang)
-
-        converted_audio.save(f'{name}.mp3')
-        playsound.playsound(f'{name}.mp3')
-
+        print("Welcome " + name)
         people.update_one({"name": name}, {"$set": {"count": 1, "timein": dtString}})
         updateCSV()
 

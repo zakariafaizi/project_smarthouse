@@ -41,8 +41,8 @@
                             </Frame>
 
 
-                            <StackLayout Padding="-10,0,0,0" Grid.Column="0" Grid.Row="1" >
-                                <Label Text="{Binding count, StringFormat= 'Count : \{0\} '}" 
+                            <StackLayout Padding="0,-5,0,0" Grid.Column="0" Grid.Row="1" >
+                                <Label Text="{Binding count, StringFormat= 'Count  : \{0\} '}" 
                                 LineBreakMode="NoWrap"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
                                 FontSize="13"  HorizontalOptions="Start" VerticalOptions="End" />
@@ -50,8 +50,8 @@
 
                             </StackLayout>
 
-                            <StackLayout  Padding="-20,0,0,0"  Grid.Column="0" Grid.Row="2" >
-                                <Label Text="{Binding timein, StringFormat= 'In        : \{0\}'}" 
+                            <StackLayout  Padding="0,-20,0,0"  Grid.Column="0" Grid.Row="2" >
+                                <Label Text="{Binding timein, StringFormat= 'In         : \{0\}'}" 
                                     LineBreakMode="NoWrap"
                                 
                                     Style="{DynamicResource ListItemDetailTextStyle}"
@@ -59,8 +59,8 @@
 
                             </StackLayout>
 
-                            <StackLayout Padding="5,0,0,0" Grid.Column="0" Grid.Row="3" >
-                                <Label Text="{Binding timeout, StringFormat= 'Out     : \{0\}'}" 
+                            <StackLayout Padding="0,0,0,0" Grid.Column="0" Grid.Row="3" >
+                                <Label Text="{Binding timeout, StringFormat= 'Out      : \{0\}'}" 
                                     LineBreakMode="NoWrap"
                                  
                                     Style="{DynamicResource ListItemDetailTextStyle}"
@@ -70,7 +70,7 @@
 
 
 
-                            <StackLayout Padding="5,0,0,0"  Grid.Column="0" Grid.Row="4" >
+                            <StackLayout Padding="5"  Grid.Column="0" Grid.Row="4" >
                                 <Label Text="_______________________" 
                                 LineBreakMode="NoWrap"
                                  HorizontalOptions="StartAndExpand"

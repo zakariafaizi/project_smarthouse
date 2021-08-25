@@ -30,7 +30,7 @@
         <ScrollView Grid.Row="1">
             <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
                 <Label Text="Teccart 2021" FontSize="Title"/>
-                <Label Text="The Smart House Raspberry Pi project" FontSize="16" Padding="0,0,0,0"/>
+                <Label Text="The Smart House project" FontSize="16" Padding="0,0,0,0"/>
            
               
             </StackLayout>

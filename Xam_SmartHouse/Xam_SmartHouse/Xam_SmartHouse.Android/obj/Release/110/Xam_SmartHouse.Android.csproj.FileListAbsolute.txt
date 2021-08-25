@@ -460,3 +460,15 @@ C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_Smart
 C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\stamp\_GenerateJavaStubs.stamp
 C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\stamp\_ResolveLibraryProjectImports.stamp
+C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\lp\46\jl\files.cache
+C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\lp\52\jl\files.cache
+C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\lp\53\jl\files.cache
+C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\lp\57\jl\files.cache
+C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\lp\58\jl\files.cache
+C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\lp\64\jl\files.cache
+C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\lp\65\jl\files.cache
+C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\lp\69\jl\files.cache
+C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\lp\74\jl\files.cache
+C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\lp\77\jl\files.cache
+C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\lp\80\jl\files.cache
+C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse.Android\obj\Release\110\lp\88\jl\files.cache

@@ -7,10 +7,7 @@ C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_Smart
 C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse\obj\Release\netstandard2.0\App.xaml.g.cs
 C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse\obj\Release\netstandard2.0\AppShell.xaml.g.cs
 C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse\obj\Release\netstandard2.0\Views\AboutPage.xaml.g.cs
-C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse\obj\Release\netstandard2.0\Views\ItemDetailPage.xaml.g.cs
 C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse\obj\Release\netstandard2.0\Views\ItemsPage.xaml.g.cs
-C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse\obj\Release\netstandard2.0\Views\LoginPage.xaml.g.cs
-C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse\obj\Release\netstandard2.0\Views\NewItemPage.xaml.g.cs
 C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse\obj\Release\netstandard2.0\Xam_SmartHouse.AssemblyInfoInputs.cache
 C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse\obj\Release\netstandard2.0\Xam_SmartHouse.AssemblyInfo.cs
 C:\Users\Zakaria\Documents\DECSession6\Stage\SMARTHOUSE\Xam_SmartHouse\Xam_SmartHouse\Xam_SmartHouse\obj\Release\netstandard2.0\Xam_SmartHouse.csproj.CoreCompileInputs.cache
